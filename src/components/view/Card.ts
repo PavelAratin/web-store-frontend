@@ -25,8 +25,6 @@ export class Card implements ICard {
     this._cardTitle = this._cardElement.querySelector('.card__title');
     this._cardImage = this._cardElement.querySelector('.card__image');
     this._cardPrice = this._cardElement.querySelector('.card__price');
-    console.log(this._cardElement);
-
 
     if (actions?.onClick) {
       this._cardElement.addEventListener('click', actions.onClick);

@@ -13,10 +13,9 @@ export class Modal implements IModal {
     this._content = modalContainer.querySelector('.modal__content');
     this._pageWrapper = document.querySelector('.page__wrapper');
     // с начала написать методы потом переходить к привязкам
-    // this.closeButton.addEventListener('click', this.close.bind(this));
-    // this.modalContainer.addEventListener('click', this.close.bind(this));
+    this.closeButton.addEventListener('click', this.close.bind(this));
+    this.modalContainer.addEventListener('click', this.close.bind(this));
     this.modalContainer.querySelector('.modal__container').addEventListener('click', event => event.stopPropagation());
-
   }
 
   // принимает элемент разметки которая будет отображаться в "modal__content" модального окна
@@ -33,17 +32,17 @@ export class Modal implements IModal {
   // закрытие модального окна
   close() {
     this.modalContainer.classList.remove('modal_active');
-    this._content = null; // очистка контента в модальном окне
+    this.content = null; // очистка контента в модальном окне
     this.events.emit('modal:close');
   }
 
-  // set locked(value: boolean) {
-  //   if (value) {
-  //     this._pageWrapper.classList.add('page__wrapper_locked');
-  //   } else {
-  //     this._pageWrapper.classList.remove('page__wrapper_locked');
-  //   }
-  // }
+  set locked(value: boolean) {
+    if (value) {
+      this._pageWrapper.classList.add('page__wrapper_locked');
+    } else {
+      this._pageWrapper.classList.remove('page__wrapper_locked');
+    }
+  }
 
   render(): HTMLElement {
     this._content;
