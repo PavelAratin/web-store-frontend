@@ -1,4 +1,4 @@
-// import { createElement } from "../../utils/utils";
+import { createElement } from "../../utils/utils";
 import { IEvents } from "../base/events";
 import { IBasket } from "../../types";
 
@@ -21,6 +21,25 @@ export class Basket implements IBasket {
     this.headerBasketCounter = document.querySelector('.header__basket-counter');
     this.button.addEventListener('click', () => { this.events.emit('order:open') });
     this.headerBasketButton.addEventListener('click', () => { this.events.emit('basket:open') });
+    this.items = [];
+  }
+
+  set items(items: HTMLElement[]) {
+    if (items.length) {
+      this.basketList.replaceChildren(...items);
+      this.button.removeAttribute('disabled');
+    } else {
+      this.button.setAttribute('disabled', 'disabled');
+      this.basketList.replaceChildren(createElement<HTMLParagraphElement>('p', { textContent: 'Корзина пуста' }));
+    }
+  }
+
+  renderHeaderBasketCounter(value: number) {
+    this.headerBasketCounter.textContent = String(value);
+  }
+  //
+  renderSumAllProducts(sumAll: number) {
+    this.basketPrice.textContent = String(sumAll + ' синапсов');
   }
 
   render() {

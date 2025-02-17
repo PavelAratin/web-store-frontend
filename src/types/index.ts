@@ -39,7 +39,33 @@ export interface IBasket {
   basketPrice: HTMLElement;
   headerBasketButton: HTMLButtonElement;
   headerBasketCounter: HTMLElement;
-  // renderHeaderBasketCounter(value: number): void;
-  // renderSumAllProducts(sumAll: number): void;
+  renderHeaderBasketCounter(value: number): void;
+  renderSumAllProducts(sumAll: number): void;
+  render(): HTMLElement;
+}
+
+export interface IBasketItem {
+  basketItem: HTMLElement;
+  index: HTMLElement;
+  title: HTMLElement;
+  price: HTMLElement;
+  buttonDelete: HTMLButtonElement;
+  render(data: IProductItem, item: number): HTMLElement;
+}
+
+export interface IBasketModel {
+  basketProducts: IProductItem[];
+  getCounter: () => number;
+  getSumAllProducts: () => number;
+  setSelectedСard(data: IProductItem): void;
+  deleteCardToBasket(item: IProductItem): void;
+  clearBasketProducts(): void
+}
+
+export interface IOrder {
+  formOrder: HTMLFormElement;
+  buttonAll: HTMLButtonElement[];
+  paymentSelect: string;
+  formErrors: HTMLElement;
   render(): HTMLElement;
 }
