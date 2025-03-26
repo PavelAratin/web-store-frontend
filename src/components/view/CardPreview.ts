@@ -1,14 +1,14 @@
-import { Card } from "./Card";
+import { CardView } from "./CardView";
 import { IActions, IProductItem, ICard } from "../../types";
 import { IEvents } from "../base/events";
 import { BasketModel } from "../model/BasketModel";
-import { Modal } from "./Modal";
-export class CardPreview extends Card implements ICard {
+import { ModalView } from "./ModalView";
+export class CardPreview extends CardView implements ICard {
   text: HTMLElement;
   button: HTMLElement;
   private currentData: IProductItem; // Сохраняем текущие данные
 
-  constructor(template: HTMLTemplateElement, protected events: IEvents, protected basketModel: BasketModel, protected modal: Modal, actions?: IActions) {
+  constructor(template: HTMLTemplateElement, protected events: IEvents, protected basketModel: BasketModel, protected modal: ModalView, actions?: IActions) {
     super(template, events, actions);// Добавляем BasketModel
     this.text = this._cardElement.querySelector('.card__text');
     this.button = this._cardElement.querySelector('.card__button');

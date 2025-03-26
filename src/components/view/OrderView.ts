@@ -1,7 +1,7 @@
 import { IEvents } from "../base/events";
 import { IOrder } from "../../types";
 
-export class Order implements IOrder {
+export class OrderFormView implements IOrder {
   formOrder: HTMLFormElement;
   buttonAll: HTMLButtonElement[];
   buttonSubmit: HTMLButtonElement;
@@ -12,6 +12,7 @@ export class Order implements IOrder {
     this.buttonAll = Array.from(this.formOrder.querySelectorAll('.button_alt'));
     this.buttonSubmit = this.formOrder.querySelector('.order__button');
     this.formErrors = this.formOrder.querySelector('.form__errors');
+
 
     //получение способа оплаты 
     this.buttonAll.forEach(button => {
@@ -25,7 +26,7 @@ export class Order implements IOrder {
       const target = event.target as HTMLInputElement;
       const nameInput = target.name;
       const valueInput = target.value;
-      this.events.emit('order:changeAddress', { nameInput, valueInput });
+      this.events.emit('order:changeAddressInput', { nameInput, valueInput });
     });
     this.formOrder.addEventListener('submit', (event: Event) => {
       event.preventDefault();
@@ -39,9 +40,13 @@ export class Order implements IOrder {
       item.classList.toggle('button_alt-active', item.name === paymentMethod);
     })
   }
-
-  set validForm(value: boolean) {
-    this.buttonSubmit.disabled = !value;
+  toggleErrors(email?: string, phone?: string): void {
+    this.formErrors.innerHTML = `
+      <div>
+        <div>${email || ''}</div>
+        <div>${phone || ''}</div>
+      </div>
+    `;
   }
 
   render() {

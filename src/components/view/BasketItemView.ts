@@ -2,7 +2,7 @@ import { IActions, IProductItem } from "../../types";
 import { IEvents } from "../base/events";
 import { IBasketItem } from "../../types";
 
-export class BasketItem implements IBasketItem {
+export class BasketItemView implements IBasketItem {
   basketItem: HTMLElement;
   index: HTMLElement;
   title: HTMLElement;

@@ -69,3 +69,30 @@ export interface IOrder {
   formErrors: HTMLElement;
   render(): HTMLElement;
 }
+export interface IFormErrors {
+  address?: string;
+  payment?: string;
+  email?: string;
+  phone?: string;
+}
+
+export interface ISuccessForm {
+  successForm: HTMLElement;
+  description: HTMLElement;
+  button: HTMLButtonElement;
+  render(total: number): HTMLElement;
+}
+
+export interface IOrderPost {
+  payment: string;
+  email: string;
+  phone: string;
+  address: string;
+  total: number;
+  items: string[];
+}
+
+export interface IOrderResult {
+  id: string;
+  total: number;
+}

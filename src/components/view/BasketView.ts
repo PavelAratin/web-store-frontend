@@ -2,7 +2,7 @@ import { createElement } from "../../utils/utils";
 import { IEvents } from "../base/events";
 import { IBasket } from "../../types";
 
-export class Basket implements IBasket {
+export class BasketView implements IBasket {
   basket: HTMLElement;
   title: HTMLElement;
   basketList: HTMLElement;

@@ -1,5 +1,5 @@
 import { IEvents } from '../base/events';
-// import { FormErrors } from '../../types/index'
+import { IFormErrors } from '../../types/index';
 
 export interface IFormModel {
   payment: string;
@@ -8,102 +8,77 @@ export interface IFormModel {
   address: string;
   total: number;
   items: string[];
-  getOrderAddress(field: string, value: string): void
-  // validateOrder(): boolean;
-  // setOrderData(field: string, value: string): void
-  // validateContacts(): boolean;
-  // getOrderProd(): object;
-  //getOrderLot() - старое название
+  getAddress(nameInput: string, valueInput: string): void;
+  validateAddressAndPayment(): boolean;
+  getEmailAndPhone(nameInput: string, valueInput: string): void;
+  validateEmailAndPhone(): boolean;
+  getOrderProd(): {
+    payment: string;
+    email: string;
+    phone: string;
+    address: string;
+    total: number;
+    items: string[];
+  };
 }
 
 export class FormModel implements IFormModel {
-  payment: string;
-  email: string;
-  phone: string;
-  address: string;
-  total: number;
-  items: string[];
-  // formErrors: FormErrors = {};
+  payment = '';
+  email = '';
+  phone = '';
+  address = '';
+  total = 0;
+  items: string[] = [];
+  formErrors: IFormErrors = {};
+  constructor(protected events: IEvents) { }
 
-  constructor(protected events: IEvents) {
-    this.payment = '';
-    this.email = '';
-    this.phone = '';
-    this.address = '';
-    this.total = 0;
-    this.items = [];
-  }
-
-  // принимаем значение строки "address"
-  getOrderAddress(nameInput: string, valueInput: string) {
+  getAddress(nameInput: string, valueInput: string): void {
     if (nameInput === 'address') {
       this.address = valueInput;
     }
-    // if (this.validateOrder()) {
-    //   this.events.emit('order:ready', this.getOrderLot());
-    // }
   }
 
-  // валидация данных строки "address"
-  // validateOrder() {
-  //   // const regexp = /^[а-яА-ЯёЁa-zA-Z0-9\s\/.,-]{7,}$/;
-  //   // const errors: typeof this.formErrors = {};
+  validateAddressAndPayment(): boolean {
+    const errors: IFormErrors = {};
 
-  //   if (!this.address) {
-  //     errors.address = 'Необходимо указать адрес'
-  //   } else if (!regexp.test(this.address)) {
-  //     errors.address = 'Укажите настоящий адрес'
-  //   } else if (!this.payment) {
-  //     errors.payment = 'Выберите способ оплаты'
-  //   }
+    if (!this.address) {
+      errors.address = 'Необходимо указать адрес';
+    }
+    if (!this.payment) {
+      errors.payment = 'Выберите способ оплаты';
+    }
 
-  //   this.formErrors = errors;
-  //   this.events.emit('formErrors:address', this.formErrors);
-  //   return Object.keys(errors).length === 0;
-  // }
+    this.formErrors = errors;
+    this.events.emit('formErrors:addressAndPayment', this.formErrors);
 
-  // принимаем значение данных строк "Email" и "Телефон"
-  // setOrderData(field: string, value: string) {
-  //   if (field === 'email') {
-  //     this.email = value;
-  //   } else if (field === 'phone') {
-  //     this.phone = value;
-  //   }
+    return Object.keys(this.formErrors).length === 0;
+  }
 
-  //   // if (this.validateContacts()) {
-  //   //   this.events.emit('order:ready', this.getOrderLot());
-  //   // }
-  // }
+  getEmailAndPhone(nameInput: string, valueInput: string): void {
+    if (nameInput === 'email') {
+      this.email = valueInput;
+    } else if (nameInput === 'phone') {
+      this.phone = valueInput;
+    }
+  }
 
-  // // Валидация данных строк "Email" и "Телефон"
-  // validateContacts() {
-  //   const regexpEmail = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
-  //   const regexpPhone = /^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{10}$/;
-  //   const errors: typeof this.formErrors = {};
+  validateEmailAndPhone(): boolean {
+    const errors: IFormErrors = {};
 
-  //   if (!this.email) {
-  //     errors.email = 'Необходимо указать email'
-  //   } else if (!regexpEmail.test(this.email)) {
-  //     errors.email = 'Некорректный адрес электронной почты'
-  //   }
+    if (!this.email) {
+      errors.email = 'Укажите email';
+    }
+    if (!this.phone) {
+      errors.phone = 'Укажите телефон';
+    }
 
-  //   if (this.phone.startsWith('8')) {
-  //     this.phone = '+7' + this.phone.slice(1);
-  //   }
+    this.formErrors = errors;
+    this.events.emit('formErrors:emailAndPhone', this.formErrors);
 
-  //   if (!this.phone) {
-  //     errors.phone = 'Необходимо указать телефон'
-  //   } else if (!regexpPhone.test(this.phone)) {
-  //     errors.phone = 'Некорректный формат номера телефона'
-  //   }
-
-  //   this.formErrors = errors;
-  //   this.events.emit('formErrors:change', this.formErrors);
-  //   return Object.keys(errors).length === 0;
-  // }
+    return Object.keys(this.formErrors).length === 0;
+  }
 
   getOrderProd() {
-    //getOrderLot() - старое название
     return {
       payment: this.payment,
       email: this.email,
@@ -111,6 +86,6 @@ export class FormModel implements IFormModel {
       address: this.address,
       total: this.total,
       items: this.items,
-    }
+    };
   }
 }

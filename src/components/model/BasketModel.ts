@@ -43,7 +43,7 @@ export class BasketModel implements IBasketModel {
     const isProductIncart = this._basketProducts.find((card) => card.id === item.id);
     return isProductIncart;
   }
-
+  //очистка корзины после успешно оформленного товара
   clearBasketProducts() {
     this.basketProducts = []
   }

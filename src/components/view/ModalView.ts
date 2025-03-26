@@ -1,7 +1,7 @@
 import { IEvents } from "../base/events";
 import { IModal } from "../../types";
 
-export class Modal implements IModal {
+export class ModalView implements IModal {
   protected modalContainer: HTMLElement;
   protected closeButton: HTMLButtonElement;
   protected _content: HTMLElement;

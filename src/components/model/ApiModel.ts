@@ -1,5 +1,5 @@
 import { ApiListResponse, Api } from '../base/api'
-import { IProductItem } from '../../types';
+import { IProductItem, IOrderPost, IOrderResult } from '../../types';
 
 //возможно потом понадобиться - можно будет вынести в файл types.ts
 // export interface IApiModel {
@@ -29,8 +29,8 @@ export class ApiModel extends Api {
     );
   }
 
-  // получаем ответ от сервера по сделанному заказу
-  // postOrderLot(order: IOrderLot): Promise<IOrderResult> {
-  //   return this.post(`/order`, order).then((data: IOrderResult) => data);
-  // }
+  //получаем ответ от сервера по сделанному заказу
+  postOrder(order: IOrderPost): Promise<IOrderResult> {
+    return this.post(`/order`, order).then((data: IOrderResult) => data);
+  }
 }
